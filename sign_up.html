@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="SignInApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        #h {
+            color: #e1005e;
+            font-size: 25px;
+            font-weight: lighter; 
+        }
+
+        #sml {
+            color: #fff;
+            font-size: 35px;
+            margin-top: 10px;
+            font-weight: lighter; 
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .wrap9 {
+            position: relative;
+            height: 500px;
+            background-image: url('3.jpg');
+            background-attachment: fixed;
+            background-size: cover;
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        .text-on-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            text-align: center;
+            color: #fff;
+        }
+        .home-content {
+            padding-top: 100px;
+            text-align: center;
+            color: #fff;
+        }
+        .icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        #bg{
+          color: black;
+        }
+        .home-content p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #ddd;  
+        }
+    </style>
+</head>
+<body>
+<div class="wrap9">
+    <div class="overlay"></div>
+    <div class="text-on-image">
+        <h1 id="h">Hello...<br><h2 id="sml">Welcome</h2><br></h1>
+        <h1>OTP Generator</h1>
+<h3>Generate secure one-time passwords for your accounts.</h3>
+    </div>
+
+</div>
+<div class="container" ng-controller="SignInController as ctrl">
+    <form id="signin-form" ng-submit="ctrl.signIn()" method="post" action="signup.php" novalidate>
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" ng-model="ctrl.username" placeholder="Username" required>
+            <small class="error-message" ng-show="signinForm.username.$error.required">Username is required.</small>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" ng-model="ctrl.email" placeholder="Email" required>
+            <small class="error-message" ng-show="signinForm.email.$error.required">Email is required.</small>
+            <small class="error-message" ng-show="signinForm.email.$error.email">Invalid email format.</small>
+        </div>
+        <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" ng-model="ctrl.age" placeholder="Age" required>
+            <small class="error-message" ng-show="signinForm.age.$error.required">Age is required.</small>
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" ng-model="ctrl.phone" placeholder="Phone Number" required>
+            <small class="error-message" ng-show="signinForm.phone.$error.required">Phone number is required.</small>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" ng-model="ctrl.password" placeholder="Password" required>
+            <small class="error-message" ng-show="signinForm.password.$error.required">Password is required.</small>
+        </div>
+        <div class="form-group">
+            <label for="confirm-password">Confirm Password:</label>
+            <input type="password" id="confirm-password" name="confirm-password" ng-model="ctrl.confirmPassword" placeholder="Confirm Password" required>
+            <small class="error-message" ng-show="signinForm['confirm-password'].$error.required">Confirm password is required.</small>
+            <small class="error-message" ng-show="ctrl.password !== ctrl.confirmPassword">Passwords do not match.</small>
+        </div>
+        <button type="submit">Sign In</button>
+    </form>
+    <div ng-show="ctrl.detailsEntered">
+        <h2 id="bg">Entered Details</h2>
+        <p ng-if="ctrl.detailsEntered">Username: {{ ctrl.username }}</p>
+        <p ng-if="ctrl.detailsEntered">Email: {{ ctrl.email }}</p>
+        <p ng-if="ctrl.detailsEntered">Age: {{ ctrl.age }}</p>
+        <p ng-if="ctrl.detailsEntered">Phone Number: {{ ctrl.phone }}</p>
+    </div>    
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script>
+  angular.module('SignInApp', [])
+    .controller('SignInController', function($timeout, $window) {
+        var vm = this;
+        vm.detailsEntered = false;
+        vm.signIn = function() {
+            if (vm.password !== vm.confirmPassword) {
+                alert("Passwords do not match.");
+                return;
+            }
+            vm.detailsEntered = true;
+            alert("Sign in successful!");
+            $timeout(function() {
+                $window.location.href = 'otp.html';
+            }, 10000);
+        };
+    });
+
+</script>
+
+</body>
+</html>
